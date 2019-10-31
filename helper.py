@@ -6,3 +6,4 @@ def itemHasNonZeroValue(item):
 
 def isUnderHighestQualityValue(item):
     return item.quality < 50
+

@@ -9,6 +9,7 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
+            # Quality
             if not itemIsNamed(item, "Aged Brie") and not itemIsNamed(item,"Backstage passes to a TAFKAL80ETC concert"):
                 if itemHasNonZeroValue(item):
                     if item.isItemConjured():
@@ -23,6 +24,7 @@ class GildedRose(object):
                                 item.incrementQuality()
                         if item.sell_in < 6 and isUnderHighestQualityValue(item):
                                 item.incrementQuality()
+            # Sell in
             if not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
@@ -33,7 +35,7 @@ class GildedRose(object):
                     else:
                         item.decreaseQualityBy(item.quality)
                 else:
-                    if item.quality < 50:
+                    if isUnderHighestQualityValue(item):
                         item.incrementQuality()
 
 
