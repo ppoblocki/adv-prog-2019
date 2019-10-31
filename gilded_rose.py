@@ -19,19 +19,16 @@ class GildedRose(object):
                 if isUnderHighestQualityValue(item):
                     item.incrementQuality()
                     if itemIsNamed(item, "Backstage passes to a TAFKAL80ETC concert"):
-                        if item.sell_in < 11:
-                            if isUnderHighestQualityValue(item):
+                        if item.sell_in < 11 and isUnderHighestQualityValue(item):
                                 item.incrementQuality()
-                        if item.sell_in < 6:
-                            if isUnderHighestQualityValue(item):
+                        if item.sell_in < 6 and isUnderHighestQualityValue(item):
                                 item.incrementQuality()
             if not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
                 if not itemIsNamed(item, "Aged Brie"):
                     if not itemIsNamed(item, "Backstage passes to a TAFKAL80ETC concert"):
-                        if itemHasNonZeroValue(item):
-                            if not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
+                        if itemHasNonZeroValue(item) and not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
                                 item.decreaseQualityBy(1)
                     else:
                         item.decreaseQualityBy(item.quality)
