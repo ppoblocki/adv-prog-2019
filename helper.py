@@ -1,11 +1,8 @@
 def itemIsNamed(item, name):
-    if item.name == name:
-        return True
-    else:
-        return False
+    return item.name == name
 
 def itemHasValue(item):
-    if item.quality > 0:
-        return True
-    else:
-        return False
+    return item.quality > 0
+
+def isUnderHighestQualityValue(item):
+    return item.quality < 50
