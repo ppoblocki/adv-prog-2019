@@ -1,7 +1,7 @@
 def itemIsNamed(item, name):
     return item.name == name
 
-def itemHasValue(item):
+def itemHasNonZeroValue(item):
     return item.quality > 0
 
 def isUnderHighestQualityValue(item):

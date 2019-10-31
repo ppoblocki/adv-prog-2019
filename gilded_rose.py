@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from helper import itemIsNamed, itemHasValue, isUnderHighestQualityValue
+from helper import itemIsNamed, isUnderHighestQualityValue, itemHasNonZeroValue
 
 
 class GildedRose(object):
@@ -10,7 +10,7 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
             if not itemIsNamed(item, "Aged Brie") and not itemIsNamed(item,"Backstage passes to a TAFKAL80ETC concert"):
-                if itemHasValue(item):
+                if itemHasNonZeroValue(item):
                     if itemIsNamed(item, "Conjured Mana Cake"):
                         item.quality = item.quality - 2
                     elif not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
