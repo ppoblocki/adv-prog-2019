@@ -96,11 +96,6 @@ class GildedRoseTest(unittest.TestCase):
         item.updateQualityForNonStandardItem()
         self.assertEqual(item.quality, 5)
 
-    def test_updateQualityForNonStandardItem_3(self):
-        item = Item("Sulfuras, Hand of Ragnaros", 50, 50)
-        item.updateQualityForNonStandardItem()
-        self.assertEqual(item.quality, 50)
-
     def test_updateSellIn(self):
         item = Item("Sulfuras, Hand of Ragnaros", 50, 50)
         item.updateSellIn()
@@ -110,11 +105,6 @@ class GildedRoseTest(unittest.TestCase):
         item = Item("Aged Brie", 5, 5)
         item.updateSellIn()
         self.assertEqual(item.sell_in, 4)
-
-    def test_updateSellIn_3(self):
-        item = Item("Backstage passes to a TAFKAL80ETC concert", 3, 3)
-        item.updateSellIn()
-        self.assertEqual(item.sell_in, 2)
 
 
 if __name__ == '__main__':
