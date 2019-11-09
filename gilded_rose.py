@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from helper import itemIsNamed, isUnderHighestQualityValue, itemHasNonZeroValue
+from helper import itemIsNamed, isUnderHighestQualityValue, itemHasNonZeroValue, left10DaysBeforeDropdown, \
+    left5DaysBeforeDropdown
+
 
 class GildedRose(object):
 
@@ -8,34 +10,13 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            # Quality
-            if not itemIsNamed(item, "Aged Brie") and not itemIsNamed(item,"Backstage passes to a TAFKAL80ETC concert"):
-                if itemHasNonZeroValue(item):
-                    if item.isItemConjured():
-                        item.decreaseQualityBy(2)
-                    elif not item.isItemSulfuras():
-                        item.decreaseQualityBy(1)
+            # Quality update
+            if item.isStandardItem():
+                item.updateQualityForStandardItem()
             else:
-                if isUnderHighestQualityValue(item):
-                    item.incrementQuality()
-                    if itemIsNamed(item, "Backstage passes to a TAFKAL80ETC concert"):
-                        if item.sell_in < 11 and isUnderHighestQualityValue(item):
-                                item.incrementQuality()
-                        if item.sell_in < 6 and isUnderHighestQualityValue(item):
-                                item.incrementQuality()
-            # Sell in
-            if not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if not itemIsNamed(item, "Aged Brie"):
-                    if not itemIsNamed(item, "Backstage passes to a TAFKAL80ETC concert"):
-                        if itemHasNonZeroValue(item) and not itemIsNamed(item, "Sulfuras, Hand of Ragnaros"):
-                                item.decreaseQualityBy(1)
-                    else:
-                        item.decreaseQualityBy(item.quality)
-                else:
-                    if isUnderHighestQualityValue(item):
-                        item.incrementQuality()
+                item.updateQualityForNonStandardItem()
+            # Sell in update
+            item.updateSellIn()
 
 
 class Item:
@@ -48,19 +29,52 @@ class Item:
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
     def isStandardItem(self):
-        if ["Conjured", "Sulfuras", "Brie", "Backstage"] in self.name:
+        if self.name in ["Conjured Mana Cake", "Sulfuras, Hand of Ragnaros",
+                         "Aged Brie", "Backstage passes to a TAFKAL80ETC concert"]:
             return False
         else:
             return True
 
     def incrementQuality(self):
-        self.quality += 1
+        if isUnderHighestQualityValue(self):
+            self.quality += 1
+
+    def incrementQualityBy(self, increment):
+        if isUnderHighestQualityValue(self):
+            self.quality += increment
 
     def decreaseQualityBy(self, decrease):
-        self.quality -= decrease
+        if itemHasNonZeroValue(self):
+            self.quality -= decrease
 
-    def isItemConjured(self):
-        return "Conjured" in self.name
+    def updateQualityForStandardItem(self):
+        if itemHasNonZeroValue(self):
+            self.quality -= 1
 
-    def isItemSulfuras(self):
-        return "Sulfuras" in self.name
+    def backstagePassesQualityDropdown(self):
+        if self.sell_in < 0:
+            self.quality = 0
+
+    def backstagePassesIncrementQuality(self):
+        self.incrementQuality()
+        if left5DaysBeforeDropdown(self):
+            self.incrementQualityBy(2)
+        elif left10DaysBeforeDropdown(self):
+            self.incrementQuality()
+
+    def updateQualityForNonStandardItem(self):
+        if itemIsNamed(self, "Conjured Mana Cake"):
+            self.decreaseQualityBy(2)
+        elif itemIsNamed(self, "Backstage passes to a TAFKAL80ETC concert"):
+            self.backstagePassesIncrementQuality()
+        else:
+            self.incrementQuality()
+
+    def updateSellIn(self):
+        self.sell_in -= 1
+        if itemIsNamed(self, "Sulfuras, Hand of Ragnaros"):
+            self.sell_in += 1
+        elif itemIsNamed(self, "Aged Brie"):
+            self.incrementQuality()
+        elif itemIsNamed(self, "Backstage passes to a TAFKAL80ETC concert"):
+            self.backstagePassesQualityDropdown()
