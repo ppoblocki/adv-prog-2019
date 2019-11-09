@@ -44,22 +44,15 @@ class GildedRoseTest(unittest.TestCase):
     def test_incrementQuality(self):
         item = Item("Foo", 1, 1)
         item.incrementQuality()
-        self.assertEqual(item.quality, 2)
-
-    def test_incrementQuality_2(self):
-        item = Item("Bar", 1, 50)
-        item.incrementQuality()
-        self.assertEqual(item.quality, 50)
+        item2 = Item("Bar", 1, 50)
+        item2.incrementQuality()
+        qualityCount = item.quality + item2.quality
+        self.assertEqual(qualityCount, 52)
 
     def test_incrementQualityBy(self):
         item = Item("Foo", 1, 1)
         item.incrementQualityBy(5)
         self.assertEqual(item.quality, 6)
-
-    def test_incrementQualityBy_2(self):
-        item = Item("Bar", 1, 50)
-        item.incrementQualityBy(10)
-        self.assertEqual(item.quality, 50)
 
     def test_decreaseQualityBy(self):
         item = Item("Bar", 1, 50)
