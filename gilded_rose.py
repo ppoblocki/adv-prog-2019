@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from helper import itemIsNamed, isUnderHighestQualityValue, itemHasNonZeroValue
 
-
 class GildedRose(object):
 
     def __init__(self, items):
@@ -47,6 +46,12 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def isStandardItem(self):
+        if ["Conjured", "Sulfuras", "Brie", "Backstage"] in self.name:
+            return False
+        else:
+            return True
 
     def incrementQuality(self):
         self.quality += 1
