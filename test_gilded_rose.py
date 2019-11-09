@@ -49,45 +49,30 @@ class GildedRoseTest(unittest.TestCase):
         qualityCount = item.quality + item2.quality
         self.assertEqual(qualityCount, 52)
 
-    def test_incrementQualityBy(self):
-        item = Item("Foo", 1, 1)
+    def test_incrementAndDecreaseQualityBy(self):
+        item = Item("Foo", 5, 45)
         item.incrementQualityBy(5)
-        self.assertEqual(item.quality, 6)
-
-    def test_decreaseQualityBy(self):
-        item = Item("Bar", 1, 50)
-        item.decreaseQualityBy(10)
-        self.assertEqual(item.quality, 40)
+        item.decreaseQualityBy(5)
+        self.assertEqual(item.quality, 45)
 
     def test_updateQualityForStandardItem(self):
-        item = Item("Bar", 1, 25)
-        item.updateQualityForStandardItem()
-        self.assertEqual(item.quality, 24)
+        items = [Item("Item1", 1, 1), Item("Item2", 1, 2), Item("Item3", 1, 3)]
+        qualityCount = 0
+        for item in items:
+            item.updateQualityForStandardItem()
+            qualityCount += item.quality
+        self.assertEqual(qualityCount, 3)
 
-    def test_backstagePassesQualityDropdown(self):
+    def test_backstagePassesQualityDropdownAndIncrement(self):
         item = Item("Backstage passes to a TAFKAL80ETC concert", 2, 20)
         item.backstagePassesQualityDropdown()
-        self.assertEqual(item.quality, 20)
-
-    def test_backstagePassesIncrementQuality(self):
-        item = Item("Backstage passes to a TAFKAL80ETC concert", 2, 20)
         item.backstagePassesIncrementQuality()
         self.assertEqual(item.quality, 23)
-
-    def test_backstagePassesIncrementQuality_2(self):
-        item = Item("Backstage passes to a TAFKAL80ETC concert", 8, 20)
-        item.backstagePassesIncrementQuality()
-        self.assertEqual(item.quality, 22)
 
     def test_updateQualityForNonStandardItem(self):
         item = Item("Conjured Mana Cake", 2, 2)
         item.updateQualityForNonStandardItem()
         self.assertEqual(item.quality, 0)
-
-    def test_updateQualityForNonStandardItem_2(self):
-        item = Item("Backstage passes to a TAFKAL80ETC concert", 2, 2)
-        item.updateQualityForNonStandardItem()
-        self.assertEqual(item.quality, 5)
 
     def test_updateSellIn(self):
         item = Item("Sulfuras, Hand of Ragnaros", 50, 50)
