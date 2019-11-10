@@ -18,7 +18,8 @@ class GildedRoseTest(unittest.TestCase):
     def test_item_has_non_zero_value(self):
         ''' Test for item_has_non_zero_value().'''
         item = Item("Bar", 1, 1)
-        self.assertTrue(item_has_non_zero_value(item))
+        result = item_has_non_zero_value(item)
+        self.assertTrue(result)
 
     def test_is_under_highest_quality_value(self):
         '''Test for is_under_highest_quality_value().'''
