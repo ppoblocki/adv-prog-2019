@@ -3,4 +3,5 @@ venv/
 .cache
 .coverage
 .idea/
+.vscode
 *.iml
