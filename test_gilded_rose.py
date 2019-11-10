@@ -25,15 +25,13 @@ class GildedRoseTest(unittest.TestCase):
         item = Item("Foo", 1, 51)
         self.assertFalse(is_under_highest_quality_value(item))
 
-    def test_left_10_days_before_dropdown(self):
-        '''Test for left_10_days_before_dropdown().'''
+    def test_left_5_or_10_days_before_dropdown(self):
+        '''Test for left_5_days_before_dropdown() and
+           left_10_days_before_dropdown().'''
         item = Item("Bar", 10, 1)
-        self.assertTrue(left_10_days_before_dropdown(item))
-
-    def test_left_5_days_before_dropdown(self):
-        '''Test for left_5_days_before_dropdown().'''
-        item = Item("Foo", 6, 1)
-        self.assertFalse(left_5_days_before_dropdown(item))
+        first = left_10_days_before_dropdown(item)
+        second = left_5_days_before_dropdown(item)
+        self.assertEqual(first + second, 1)
 
     # Gilded Rose tests
     def test_is_standard_item(self):
